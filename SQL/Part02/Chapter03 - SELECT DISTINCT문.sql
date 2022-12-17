@@ -1,0 +1,85 @@
+-- 문법
+SELECT DISTINCT 
+	COLUMN_1
+from
+	TABLE_NAME
+;
+
+--
+SELECT DISTINCT 
+	COLUMN_1,
+	COLUMN_2,
+FROM 
+	TABLE_NAME
+;
+
+--
+SELECT DISTINCT 
+	COLUMN_1,
+	COLUMN_2,
+FROM 
+	TABLE_NAME
+ORDER BY
+	COLUMN_1,
+	COLUMN_2
+;
+
+-- 실습 준비 --
+CREATE TABLE T1(ID SERIAL NOT NULL PRIMARY KEY, BCOLOR VARCHAR, FCOLOR VARCHAR);
+
+INSERT 
+	INTO T1(BCOLOR, FCOLOR)
+VALUES
+	('red', 'red'),
+	('red', 'red'),
+	('red', NULL),
+	(NULL, 'red'),
+	('red', 'green'),
+	('red', 'blue'),
+	('green', 'red'),
+	('green', 'green'),
+	('blue', 'red'),
+	('blue', 'green'),
+	('blue', 'blue')
+;
+	
+
+-- DISTINCT 사용 + 컬럼 한 개
+SELECT * FROM t1;
+
+SELECT DISTINCT BCOLOR
+FROM
+	T1
+ORDER BY
+	BCOLOR
+;
+
+-- DISTINCT 사용 + 컬럼 2개
+SELECT DISTINCT 
+	BCOLOR,
+	FCOLOR
+FROM
+	T1
+ORDER BY
+	BCOLOR, FCOLOR
+;
+
+-- DISTINCT 사용 + 컬럼 1개 + ON 사용
+SELECT DISTINCT ON
+	(BCOLOR) BCOLOR,
+	FCOLOR
+FROM 
+	T1
+ORDER BY
+	BCOLOR, FCOLOR
+;
+
+-- DISTINCT 사용 + 컬럼 두 개 + ON 사용 + DESC 정렬
+SELECT DISTINCT ON
+	(BCOLOR) BCOLOR,
+	FCOLOR
+FROM 
+	T1
+ORDER BY
+	BCOLOR, FCOLOR DESC
+;
