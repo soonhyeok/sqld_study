@@ -1,0 +1,43 @@
+CREATE TABLE BASKET_A
+(
+	ID INT PRIMARY KEY,
+	FRUIT VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE BASKET_B
+(
+	ID INT PRIMARY KEY,
+	FRUIT VARCHAR(100) NOT NULL
+);
+
+INSERT INTO BASKET_A
+	(ID, FRUIT)
+VALUES
+	(1, 'APPLE'),
+	(2, 'Orange'),
+	(3, 'Banana'),
+	(4, 'Cucumber')
+;
+
+INSERT INTO BASKET_B
+	(ID, FRUIT)
+VALUES
+	(1, 'Orange'),
+	(2, 'Apple'),
+	(3, 'Watermelon'),
+	(4, 'Pear')
+;
+
+COMMIT;
+
+SELECT 
+	*
+FROM
+	BASKET_A
+;
+
+SELECT
+	*
+FROM
+	BASKET_B
+;

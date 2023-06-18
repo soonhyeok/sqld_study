@@ -1,0 +1,24 @@
+-- DVD 렌탈 시스템의 관리자는 매달 마다 매출 순위 1위를 한 고객에게 특별한 선물을 주고자 한다.
+-- 이런 업무를 달성하기 위해서 CUSTOMER_RANK_YYYY이라는 테이블을 CTAS 기법으로 생성하는 SQL을 작성하라.
+-- (단, 선물 제공 기준을 정하기 위해 SUM_AMOUNT도 저장하라.)
+CREATE TABLE CUSTOMER_RANK_YYYYMM
+AS
+	SELECT
+		A.CUSTOMER_ID,
+		A.YYYYMM,
+		A.SUM_AMOUNT,
+		ROW_NUMBER() OVER(PARTITION BY A.YYYYMM ORDER BY A.SUM_AMOUNT DESC) AS RANK_YYYYMM
+	FROM
+		(
+			SELECT
+				CUSTOMER_ID,
+				TO_CHAR(PAYMENT_DATE, 'YYYYMM') AS YYYYMM,
+				SUM(AMOUNT) AS SUM_AMOUNT
+			FROM
+				PAYMENT A
+			GROUP BY
+				A.CUSTOMER_ID, YYYYMM
+		) A
+	ORDER BY
+		YYYYMM ASC, RANK_YYYYMM
+;

@@ -1,0 +1,34 @@
+-- 실습 준비
+CREATE TABLE CROSS_T1
+(
+	LABEL CHAR(1) PRIMARY KEY
+)
+;
+
+CREATE TABLE CROSS_T2
+(
+	SCORE INT PRIMARY KEY
+)
+;
+
+INSERT INTO CROSS_T1 (LABEL)
+VALUES
+('A'),
+('B')
+;
+
+INSERT INTO CROSS_T2 (SCORE)
+VALUES
+(1),
+(2),
+(3)
+;
+
+--
+SELECT
+	*
+FROM
+	cross_t1
+CROSS JOIN
+	cross_t2
+;

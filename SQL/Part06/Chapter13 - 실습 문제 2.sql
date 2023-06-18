@@ -1,0 +1,76 @@
+--
+INSERT INTO TB_MOVIE_CUST(CUST_ID, CUST_NM, SEX, BIRTH_DATE, ADDRESS, PHONE_NUMBER, CUST_GRADE, JOIN_DT)
+VALUES
+	('0000000001', '이경오', 'MAN', TO_DATE('1984-06-12', 'YYYY-MM-DD'), '경기도 양산시 동안구 비산동 1-1', '010-1234-1234', 'S', TO_DATE('2017-01-01', 'YYYY-MM-DD')),
+	('0000000002', '홍길동', 'MAN', TO_DATE('1971-07-04', 'YYYY-MM-DD'), '경기도 양산시 동안구 비산동 1-2', '010-4321-4321', 'A', TO_DATE('2018-06-01', 'YYYY-MM-DD')),
+	('0000000003', '이수지', 'WOMAN', TO_DATE('1994-12-28', 'YYYY-MM-DD'), '경기도 양산시 동안구 비산동 1-3', '010-5678-5678', 'B', TO_DATE('2019-12-01', 'YYYY-MM-DD')),
+	('0000000004', '이승우', 'MAN', TO_DATE('1984-06-12', 'YYYY-MM-DD'), '경기도 양산시 동안구 비산동 1-1', '010-1234-1234', 'A', TO_DATE('2017-01-01', 'YYYY-MM-DD')),
+	('0000000005', '안정환', 'MAN', TO_DATE('1971-07-04', 'YYYY-MM-DD'), '경기도 양산시 동안구 비산동 1-2', '010-4321-4321', 'A', TO_DATE('2018-06-01', 'YYYY-MM-DD')),
+	('0000000006', '고종수', 'WOMAN', TO_DATE('1994-12-28', 'YYYY-MM-DD'), '경기도 양산시 동안구 비산동 1-3', '010-5678-5678', 'C', TO_DATE('2019-12-01', 'YYYY-MM-DD')),
+	('0000000007', '기성용', 'MAN', TO_DATE('1984-06-12', 'YYYY-MM-DD'), '경기도 양산시 동안구 비산동 1-1', '010-1234-1234', 'B', TO_DATE('2017-01-01', 'YYYY-MM-DD')),
+	('0000000008', '이청용', 'MAN', TO_DATE('1971-07-04', 'YYYY-MM-DD'), '경기도 양산시 동안구 비산동 1-2', '010-4321-4321', 'C', TO_DATE('2018-06-01', 'YYYY-MM-DD')),
+	('0000000009', '박지성', 'WOMAN', TO_DATE('1994-12-28', 'YYYY-MM-DD'), '경기도 양산시 동안구 비산동 1-3', '010-5678-5678', 'D', TO_DATE('2019-12-01', 'YYYY-MM-DD'))
+;
+
+COMMIT;
+
+SELECT
+	COUNT(*) AS "전체고객수",
+	COUNT(DISTINCT CUST_GRADE) AS "등급의개수",
+	ROUND(MAX(AVG_BY_GRADE), 2) AS "등급별평균고객수",
+	MAX(MIN_BY_GRADE) AS "등급별최대고객수",
+	MAX(MAX_BY_GRADE) AS "등급별최소고객수",
+	MAX(GRADE_BY_MIN_EMP_COUNT) AS "최소고객수의등급",
+	MAX(GRADE_BY_MAX_EMP_COUNT) AS "최대고객수의등급"
+FROM
+	TB_MOVIE_CUST,
+	(
+		SELECT
+			AVG(CNT) AS AVG_BY_GRADE,
+			MAX(CNT) AS MIN_BY_GRADE,
+			MIN(CNT) AS MAX_BY_GRADE
+		FROM
+			(
+				SELECT
+					COUNT(*) AS CNT
+				FROM
+					TB_MOVIE_CUST
+				GROUP BY
+					CUST_GRADE
+			) A
+	) B,
+	(
+		SELECT
+			CUST_GRADE AS GRADE_BY_MAX_EMP_COUNT
+		FROM
+			(
+				SELECT
+					COUNT(*) AS CNT,
+					CUST_GRADE
+				FROM 
+					TB_MOVIE_CUST
+				GROUP BY
+					CUST_GRADE
+				ORDER BY
+					CNT DESC
+			) A
+			LIMIT 1
+	) C,
+	(
+		SELECT
+			CUST_GRADE AS GRADE_BY_MIN_EMP_COUNT
+		FROM
+			(
+				SELECT
+					COUNT(*) AS CNT,
+					CUST_GRADE
+				FROM 
+					TB_MOVIE_CUST
+				GROUP BY
+					CUST_GRADE
+				ORDER BY
+					CNT ASC
+			) A 
+			LIMIT 1
+	) D
+;

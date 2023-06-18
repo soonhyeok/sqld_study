@@ -1,0 +1,77 @@
+-- INSERT 문법
+INSERT INTO
+	TABLE_NAME
+VALUES
+(
+	VALUE1,
+	VALUE2,
+	VALUE3,
+	···
+)
+;
+
+INSERT INTO
+	TABLE_NAME
+(
+	COLUMN1,
+	COLUMN2
+)
+VALUES
+(
+	VALUE1,
+	VALUE2
+)
+;
+
+-- 실습 준비
+CREATE TABLE LINK(
+	ID SERIAL PRIMARY KEY,
+	URL VARCHAR(255) NOT NULL,
+	NAME VARCHAR(255) NOT NULL,
+	DESCRIPTION VARCHAR(255),
+	REL VARCHAR(50)
+)
+;
+
+DROP TABLE LINK;
+
+-- INSERT문 실습
+INSERT INTO
+	LINK
+	(URL, NAME)
+VALUES
+	('http://naver.com', 'Naver')
+;
+
+COMMIT;
+
+--
+INSERT INTO	LINK
+	(URL, NAME)
+VALUES
+	('''http://naver.com''', '''Naver''')
+;
+
+COMMIT;
+
+INSERT INTO	LINK
+	(URL, NAME)
+VALUES
+	('http://www.google.com', 'Google'),
+	('http://www.yahoo.com', 'Yahoo'),
+	('http://www.bing.com', 'Bing')
+;
+
+COMMIT;
+
+CREATE TABLE LINK_TMP AS SELECT * FROM LINK WHERE 0 = 1;
+
+INSERT INTO 
+	LINK_TMP
+SELECT
+	*
+FROM
+	LINK
+;
+
+COMMIT;

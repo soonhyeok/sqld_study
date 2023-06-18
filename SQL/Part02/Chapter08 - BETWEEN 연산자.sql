@@ -1,0 +1,54 @@
+-- BETWEEN 연산자 문법
+SELECT
+	*
+FROM
+	TABLE_NAME
+WHERE
+	COLUMN_NAME
+BETWEEN
+	VALUE_A AND VALUE_B
+;
+
+--
+SELECT 
+	*
+FROM 
+	TABLE_NAME
+WHERE
+	COLUMN_NAME
+NOT BETWEEN
+	VALUE_A AND VALUE B
+;
+
+-- 실습
+SELECT 
+	CUSTOMER_ID,
+	PAYMENT_ID,
+	AMOUNT
+FROM
+	PAYMENT
+WHERE
+	AMOUNT BETWEEN 8 AND 9
+;
+
+SELECT
+	customer_id,
+	payment_id,
+	amount
+FROM
+	PAYMENT
+WHERE
+	amount NOT BETWEEN 8 AND 9
+;
+
+--일자 비교
+SELECT
+	customer_id,
+	payment_id,
+	amount
+FROM
+	payment
+WHERE
+	CAST(payment_date AS DATE)
+		BETWEEN '2007-2-7' AND '2007-2-15'
+;

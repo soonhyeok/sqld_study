@@ -1,0 +1,1 @@
+-- WITH문과 ROW_NUMBER()를 이용해 FILM TABLE에서 RATING 컬럼별로 LENGTH 컬럼이 가장 긴 영화의 목록을 구하는 SELECT문을 작성하시오.

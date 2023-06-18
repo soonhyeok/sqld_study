@@ -1,0 +1,53 @@
+-- 문법
+INSERT INTO
+	TABLE_NAME(COLUMN_1)
+VALUES
+	(VALUE_1)
+ON CONFLICT
+	TARGET ACTION;
+	
+-- 실습 준비
+CREATE TABLE CUSTOMERS
+(
+	CUSTOMER_ID SERIAL PRIMARY KEY,
+	NAME VARCHAR UNIQUE,
+	EMAIL VARCHAR NOT NULL,
+	ACTIVE BOOL NOT NULL DEFAULT TRUE
+)
+;
+
+INSERT INTO CUSTOMERS
+	(NAME, EMAIL)
+VALUES
+	('IBM', 'contact@ibm.com'),
+	('Microsoft', 'contact@microsoft.com'),
+	('Intel', 'contact@intel.com')
+;
+
+COMMIT;
+
+--
+INSERT INTO CUSTOMERS
+	(NAME, EMAIL)
+VALUES
+	('Microsoft', 'hotline@microsoft.com')
+ON CONFLICT (NAME)
+DO NOTHING
+;
+
+COMMIT;
+
+-- NAME 컬럼이 UNIQUE 제약 조건 컬럼임을 주의한다.
+-- 즉, NAME 컬럼은 중복된 값이 존재할 수 없다.
+
+-- UPSERT문 실습 - UPDATE
+INSERT INTO CUSTOMERS
+	(NAME, EMAIL)
+VALUES
+	('Microsoft', 'hotline@microsoft.com')
+ON CONFLICT (NAME)
+DO UPDATE
+	SET EMAIL = EXCLUDED.EMAIL || ',' || CUSTOMERS.EMAIL
+;
+
+COMMIT;

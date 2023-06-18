@@ -1,0 +1,20 @@
+--
+COPY CATEGORY(CATEGORY_ID, NAME, LAST_UPDATE)
+TO 'C:\TEMP\DB_CATEGORY.CSV'
+DELIMITER ','
+CSV HEADER
+;
+
+--
+COPY CATEGORY(CATEGORY_ID, NAME, LAST_UPDATE)
+TO 'C:\TEMP\DB_CATEGORY.txt'
+DELIMITER '|'
+CSV HEADER
+;
+
+--
+COPY category(category_id, name, LAST_update)
+TO 'c:\temp\db_category_2.csv'
+DELIMITER ','
+CSV
+;
